@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="DesignSurface">
+    <option name="filePathToZoomLevelMap">
+      <map>
+        <entry key="..\:/Users/adars/AndroidStudioProjects/BolChal/app/src/main/res/drawable/round_solid_borfder.xml" value="0.1685185185185185" />
+        <entry key="..\:/Users/adars/AndroidStudioProjects/BolChal/app/src/main/res/drawable/rounded_border_rectangular_box.xml" value="0.1685185185185185" />
+        <entry key="..\:/Users/adars/AndroidStudioProjects/BolChal/app/src/main/res/layout/activity_main.xml" value="0.4" />
+        <entry key="..\:/Users/adars/AndroidStudioProjects/BolChal/app/src/main/res/layout/chat_layout_page.xml" value="0.2" />
+      </map>
+    </option>
+  </component>
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+    <output url="file://$PROJECT_DIR$/build/classes" />
+  </component>
+  <component name="ProjectType">
+    <option name="id" value="Android" />
+  </component>
+</project>

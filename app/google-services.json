@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "49795660525",
+    "firebase_url": "https://bolchal-3fc82-default-rtdb.firebaseio.com",
+    "project_id": "bolchal-3fc82",
+    "storage_bucket": "bolchal-3fc82.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:49795660525:android:104758c9b7581d826beae4",
+        "android_client_info": {
+          "package_name": "com.assistant.android.bolchal"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "49795660525-mjnvu13ldui34bs757dj2vhjs9v8mumf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDpAlFbfSRhRkt-2_06zgjIXkAKQz9Tims"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "49795660525-mjnvu13ldui34bs757dj2vhjs9v8mumf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

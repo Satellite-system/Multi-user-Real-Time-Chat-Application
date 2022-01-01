@@ -6,7 +6,16 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:layout_marginStart="16dp"
-    android:layout_marginEnd="16dp">
+    android:layout_marginEnd="16dp"
+    android:padding="2dp">
+
+    <TextView
+        android:id="@+id/nameTextView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_weight="0"
+        android:textAppearance="?android:attr/textAppearanceSmall"
+        tools:text="Name"/>
 
     <ImageView
         android:id="@+id/photoImageView"
@@ -24,10 +33,13 @@
         tools:text="Message"/>
 
     <TextView
-        android:id="@+id/nameTextView"
+        android:id="@+id/timeTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceSmall"
-        tools:text="Name"/>
+        tools:text="12:25 AM"
+        android:layout_gravity="end"
+        android:layout_marginEnd="2dp"/>
+
+
 </LinearLayout>

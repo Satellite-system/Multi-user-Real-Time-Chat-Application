@@ -8,10 +8,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 
@@ -33,19 +33,30 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         TextView AuthorTxtView = (TextView)convertView.findViewById(R.id.nameTextView);
         ImageView photoImageView = (ImageView)convertView.findViewById(R.id.photoImageView);
         TextView messageTxtView = (TextView) convertView.findViewById(R.id.messageTextView);
+        TextView timeTxtView = (TextView) convertView.findViewById(R.id.timeTextView);
 
         Message message = getItem(position);
 
         boolean isPhotoAvailable = message.getPhotoUrl()!=null;
+        boolean isTimeAvailable = message.getTime()!=null;
+
         if(isPhotoAvailable){
             messageTxtView.setVisibility(View.GONE);
             photoImageView.setVisibility(View.VISIBLE);
-            Glide.with(photoImageView.getContext()).load(message.getPhotoUrl()).into(photoImageView);
+            Glide.with(photoImageView.getContext())
+                    .load(message.getPhotoUrl())
+                    .centerCrop().placeholder(R.drawable.placeholder).into(photoImageView);
         }else{
             messageTxtView.setVisibility(View.VISIBLE);
             photoImageView.setVisibility(View.GONE);
             messageTxtView.setText(message.getText());
         }
+
+        if(isTimeAvailable){
+            timeTxtView.setVisibility(View.VISIBLE);
+            timeTxtView.setText(message.getTime());
+        }else timeTxtView.setVisibility(View.GONE);
+
         AuthorTxtView.setText(message.getName());
 
         return convertView;

@@ -5,6 +5,7 @@ public class Message {
     private String text;
     private String name;
     private String photoUrl;
+    private String time;
 
     public Message(){
 
@@ -14,6 +15,13 @@ public class Message {
         this.text = text;
         this.name = name;
         this.photoUrl = photoUrl;
+    }
+
+    public Message(String text,String name,String photoUrl,String time){
+        this.text = text;
+        this.name = name;
+        this.photoUrl = photoUrl;
+        this.time = time;
     }
 
     public String getText(){
@@ -28,6 +36,10 @@ public class Message {
         return photoUrl;
     }
 
+    public String getTime() {
+        return time;
+    }
+
     public void setName(String name) {
         this.name = name;
     }
@@ -38,5 +50,9 @@ public class Message {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public void setTime(String time) {
+        this.time = time;
     }
 }

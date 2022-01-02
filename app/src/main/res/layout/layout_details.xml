@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".details"
+    android:background="@color/purple_700">
+
+
+    <TextView
+        android:id="@+id/title_textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="16dp"
+        android:text="Let's Update Your Profile"
+        android:layout_marginTop="8dp"
+        android:textColor="@color/white"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toTopOf="@+id/profile_image"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:visibility="gone"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="16dp"
+        android:src="@drawable/profile_placeholder"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="5dp"
+        tools:ignore="MissingClass,MissingConstraints" />
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/profile_image"
+        android:layout_width="250dp"
+        android:layout_height="250dp"
+        android:src="@drawable/profile_placeholder"
+        app:civ_border_color="@color/white"
+        app:civ_border_width="5dp"
+        app:civ_shadow="true"
+        app:civ_shadow_color="#3f51b5"
+        app:layout_constraintBottom_toTopOf="@+id/upload_button"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/title_textView"/>
+
+    <Button
+        android:id="@+id/upload_button"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="32dp"
+        android:background="@color/purple_700"
+        android:text="Upload your Profile Photo"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toTopOf="@+id/userName_inputArea"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.572"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/profile_image" />
+
+    <EditText
+        android:id="@+id/userName_inputArea"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:text="@string/anonymus"
+        android:textColor="@color/white"
+        android:textColorHint="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/upload_button" />
+
+    <ImageView
+        android:id="@+id/edit"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginStart="2dp"
+        android:adjustViewBounds="true"
+        android:src="@drawable/ic_baseline_edit_24"
+        app:layout_constraintBottom_toBottomOf="@+id/userName_inputArea"
+        app:layout_constraintStart_toEndOf="@+id/userName_inputArea"
+        app:layout_constraintTop_toTopOf="@+id/userName_inputArea" />
+
+    <Button
+        android:id="@+id/Updatebutton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:layout_marginEnd="32dp"
+        android:background="@drawable/rounded_border_rectangular_box"
+        android:text="Next >>>"
+        android:textColor="@color/purple_700"
+        android:textSize="20sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/userName_inputArea" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="24dp"
+        android:text="This will be visible to your Bolchal Groups."
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/Updatebutton" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

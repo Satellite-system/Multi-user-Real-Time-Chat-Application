@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--    MIT License
+
+    Copyright (c) 2018 Mukesh Solanki
+
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+    -->
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Otp_verification"
+    android:background="@color/purple_700">
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="80dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/verification_code"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.534"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="28dp"
+        android:text="@string/type_the_verificatio"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/textView"
+        app:layout_constraintStart_toStartOf="@+id/textView"
+        app:layout_constraintTop_toBottomOf="@+id/textView" />
+
+    <TextView
+        android:id="@+id/xxx_Ph"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="+XXXXXXXXXX"
+        android:textColor="@color/white"
+        app:layout_constraintEnd_toEndOf="@+id/textView2"
+        app:layout_constraintStart_toStartOf="@+id/textView2"
+        app:layout_constraintTop_toBottomOf="@+id/textView2" />
+
+    <com.assistant.android.bolchal.ui.OptEditText
+        android:id="@+id/codeTextView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="20dp"
+        android:layout_marginBottom="52dp"
+        android:cursorVisible="false"
+        android:inputType="number"
+        android:textSize="18sp"
+        android:maxLength="6"
+        android:textColor="@color/white"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.421" />
+
+    <TextView
+        android:id="@+id/verify"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/verify"
+        android:textColor="@color/white"
+        android:textAllCaps="true"
+        android:textSize="18sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="@+id/codeTextView"
+        app:layout_constraintStart_toStartOf="@+id/codeTextView"
+        app:layout_constraintTop_toBottomOf="@id/codeTextView"
+        app:layout_constraintVertical_bias="0.20" />
+
+    <TextView
+        android:id="@+id/timer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Resend Otp in"
+        android:textColor="@color/teal_200"
+        app:layout_constraintEnd_toEndOf="@+id/verify"
+        app:layout_constraintStart_toStartOf="@+id/verify"
+        app:layout_constraintTop_toBottomOf="@+id/verify" />
+
+    <TextView
+        android:id="@+id/resend"
+        android:visibility="gone"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Resend Code"
+        android:textColor="@color/teal_200"
+        android:textSize="18sp"
+        app:layout_constraintEnd_toEndOf="@+id/verify"
+        app:layout_constraintStart_toStartOf="@+id/verify"
+        app:layout_constraintTop_toBottomOf="@+id/verify" />
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

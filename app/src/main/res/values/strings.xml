@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">BolChal</string>
+    <string name="image_sent">Image Sent</string>
+
+    <!-- Facebook application ID and custom URL scheme (app ID prefixed by 'fb'). -->
+    <string name="facebook_application_id" translatable="false">bolchal-3fc82</string>
+    <string name="facebook_login_protocol_scheme" translatable="false">bolchal-3fc82</string>
+    <string name="enter_mobile_here"> Mobile Number </string>
+    <string name="verification_code">Verification Code</string>
+    <string name="type_the_verificatio">Please type the Verification code sent to</string>
+    <string name="verify">Verify</string>
+    <string name="welcome">Welcome to BolChal</string>
+    <string name="anonymus">Anonymus</string>
+</resources>

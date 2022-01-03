@@ -252,53 +252,6 @@ public class MainActivity extends AppCompatActivity {
 */
         
     }
-/*
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-
-        if(requestCode == RC_PHOTO_PICKER && resultCode==RESULT_OK){
-            SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy HH:mm a");
-            Date date = new Date();
-
-            Uri selectedImageUri = Objects.requireNonNull(data).getData();
-            // Get a reference to store file at chat_photos/<FILENAME>
-            StorageReference photoRef = mChatPhotosStorageReference.child(selectedImageUri.getLastPathSegment());
-
-//            Toast.makeText(MainActivity.this,selectedImageUri.toString(),Toast.LENGTH_SHORT).show();
-
-            // Upload file to Firebase Storage
-            photoRef.putFile(selectedImageUri)
-                    .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                        @Override
-                        public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                            //Get a Url to the uploaded content
-                            Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl();
-
-                            downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
-                                @Override
-                                public void onSuccess(Uri uri) {
-//                                    Message message = new Message(uri.toString(),mUserName,null,dateFormat.format(date.getTime()));
-//                                    mMessageDatabaseReference.push().setValue(message);
-
-                                    // Set the download URL to the message box, so that the user can send it to the database
-                                    Message friendlyMessage = new Message(null, mUserName, uri.toString(),dateFormat.format(date));
-                                    mMessageDatabaseReference.push().setValue(friendlyMessage);
-                                }
-                            });
-
-                        }
-                    })
-                    .addOnFailureListener(new OnFailureListener() {
-                        @Override
-                        public void onFailure(@NonNull Exception e) {
-                            Toast.makeText(MainActivity.this,"unsucessful Upload",Toast.LENGTH_SHORT).show();
-                        }
-                    });
-        }
-    }
-
- */
 
     /**
      * TODO : Edit rules of real Time Firebase

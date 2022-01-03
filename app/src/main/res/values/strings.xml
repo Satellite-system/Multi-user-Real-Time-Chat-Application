@@ -11,4 +11,8 @@
     <string name="verify">Verify</string>
     <string name="welcome">Welcome to BolChal</string>
     <string name="anonymus">Anonymus</string>
+    <string name="update_your_profile">Let\'s Update Your Profile</string>
+    <string name="upload_your_profile_photo">Upload your Profile Photo</string>
+    <string name="next"><![CDATA[Next >>>]]></string>
+    <string name="this_will_be_visible_to_your_bolchal_groups">This will be visible to your Bolchal Groups.</string>
 </resources>

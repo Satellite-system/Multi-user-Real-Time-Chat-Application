@@ -16,10 +16,17 @@ import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.google.android.gms.tasks.OnCompleteListener;
+import com.google.android.gms.tasks.OnFailureListener;
+import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.UserProfileChangeRequest;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.storage.FirebaseStorage;
+import com.google.firebase.storage.StorageReference;
+import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.util.Objects;
@@ -33,6 +40,7 @@ public class details extends Activity {
 
     private static final int RC_PROFILE_PICKER = 20;
     private Uri profile_pic_url;
+    private StorageReference mRef;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +55,7 @@ public class details extends Activity {
 
         firebaseAuth = FirebaseAuth.getInstance();
         FirebaseUser user = firebaseAuth.getCurrentUser();
+        mRef = FirebaseStorage.getInstance().getReference().child("users");
 
         user_name = "anonymas";
 
@@ -86,6 +95,7 @@ public class details extends Activity {
                                     @Override
                                     public void onComplete(@NonNull Task<Void> task) {
                                         if (task.isSuccessful()) {
+                                            saveDataToFirebaseStorage();
                                             Toast.makeText(getApplicationContext(), "Profile Updated", Toast.LENGTH_LONG).show();
                                             Intent intent = new Intent(details.this, MainActivity.class);
                                             startActivity(intent);
@@ -108,7 +118,42 @@ public class details extends Activity {
             Glide.with(profile_img.getContext())
                     .load(profile_pic_url)
                     .centerCrop().placeholder(R.drawable.profile_placeholder).into(profile_img);
+
         }
         super.onActivityResult(requestCode, resultCode, data);
+    }
+
+    private void saveDataToFirebaseStorage(){
+
+        Uri selectedImageUri = profile_pic_url;
+
+        // Get a reference to store file at chat_photos/<FILENAME>
+        StorageReference photoRef = mRef.child(user_name).child(selectedImageUri.getLastPathSegment());
+
+//            Toast.makeText(MainActivity.this,selectedImageUri.toString(),Toast.LENGTH_SHORT).show();
+
+        // Upload file to Firebase Storage
+        photoRef.putFile(selectedImageUri)
+                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
+                    @Override
+                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                        //Get a Url to the uploaded content
+                        Task<Uri> downloadUrl = taskSnapshot.getStorage().getDownloadUrl();
+
+                        downloadUrl.addOnSuccessListener(new OnSuccessListener<Uri>() {
+                            @Override
+                            public void onSuccess(Uri uri) {
+                                Toast.makeText(getApplicationContext(),"Profile Updated Successfully",Toast.LENGTH_LONG).show();
+                            }
+                        });
+
+                    }
+                })
+                .addOnFailureListener(new OnFailureListener() {
+                    @Override
+                    public void onFailure(@NonNull Exception e) {
+                        Toast.makeText(getApplicationContext(),"Unsucessful Try Later",Toast.LENGTH_SHORT).show();
+                    }
+                });
     }
 }

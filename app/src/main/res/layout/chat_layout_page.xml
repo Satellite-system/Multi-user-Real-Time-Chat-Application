@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -22,7 +22,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:adjustViewBounds="true"
-        android:contentDescription="@string/image_sent" />
+        android:contentDescription="@string/image_sent"
+        android:layout_below="@id/nameTextView"/>
 
     <TextView
         android:id="@+id/messageTextView"
@@ -30,7 +31,8 @@
         android:layout_height="wrap_content"
         android:layout_weight="0"
         android:textAppearance="?android:attr/textAppearanceLarge"
-        tools:text="Message"/>
+        tools:text="Message"
+        android:layout_below="@id/nameTextView"/>
 
     <TextView
         android:id="@+id/timeTextView"
@@ -38,8 +40,8 @@
         android:layout_height="wrap_content"
         android:textAppearance="?android:attr/textAppearanceSmall"
         tools:text="12:25 AM"
-        android:layout_gravity="end"
-        android:layout_marginEnd="2dp"/>
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"/>
 
 
-</LinearLayout>
+</RelativeLayout>

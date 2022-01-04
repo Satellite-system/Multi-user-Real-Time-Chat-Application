@@ -6,6 +6,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
@@ -21,8 +22,11 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
+import android.widget.TextView;
 import android.widget.Toast;
 
+import com.bumptech.glide.Glide;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
@@ -42,6 +46,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.mikhaellopez.circularimageview.CircularImageView;
 
 import java.net.URI;
 import java.net.URL;
@@ -54,7 +59,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends Activity {
 
     private ListView mListView;
     private ConstraintLayout sendLayout;
@@ -62,6 +67,9 @@ public class MainActivity extends AppCompatActivity {
     private EditText msgEditView;
     private ImageView sendImg;
     private ChatAdapter mChatAdapter;
+    private TextView userNameTxtView;
+    private CircularImageView userProfilePic;
+    private ImageView settingImg;
 
     private String mUserName;
     private static final String TAG = "MainActivity";
@@ -94,6 +102,9 @@ public class MainActivity extends AppCompatActivity {
         addImage = findViewById(R.id.addImageExtra);
         msgEditView = (EditText)findViewById(R.id.typingMsgTextView);
         sendImg = findViewById(R.id.sendImageView);
+        userNameTxtView = findViewById(R.id.userName);
+        userProfilePic = findViewById(R.id.userProfileImg);
+        settingImg = findViewById(R.id.action_menu_presenter);
 
         mFirebaseDatabase = FirebaseDatabase.getInstance();
         mMessageDatabaseReference = mFirebaseDatabase.getReference().child("messages");
@@ -155,6 +166,13 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         msgEditView.setFilters(new InputFilter[]{new InputFilter.LengthFilter(DEFAULT_MSG_LENGTH_LIMIT)});
+
+        /**
+         * Set UserName And Profile pic at the headinning of page
+         */
+        userNameTxtView.setText(mFirebaseAuth.getCurrentUser().getDisplayName());
+        Glide.with(userProfilePic.getContext()).load(mFirebaseAuth.getCurrentUser().getPhotoUrl())
+                .placeholder(R.drawable.profile_placeholder).into(userProfilePic);
 
         /**
          * Photo/Resource pickup Intent to Select a image for a message
@@ -226,36 +244,30 @@ public class MainActivity extends AppCompatActivity {
         };
         mMessageDatabaseReference.addChildEventListener(mChildEventListener);
 
-        /*
-        PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks = new PhoneAuthProvider.OnVerificationStateChangedCallbacks() {
-            @Override
-            public void onVerificationCompleted(@NonNull PhoneAuthCredential phoneAuthCredential) {
-                Toast.makeText(MainActivity.this,"Code Verified",Toast.LENGTH_SHORT).show();
+        //logout when settingIcon is clicked
+        settingImg.setOnClickListener(view -> {
+            PopupMenu popupMenu = new PopupMenu(MainActivity.this,settingImg);
+            MainActivity.this.getMenuInflater().inflate(R.menu.main_page_menu, popupMenu.getMenu());
 
-                sign
-            }
-
-            @Override
-            public void onVerificationFailed(@NonNull FirebaseException e) {
-                Toast.makeText(MainActivity.this,"Unsucessfull",Toast.LENGTH_SHORT).show();
-            }
-        };
-
-        PhoneAuthOptions options =
-                PhoneAuthOptions.newBuilder(mFirebaseAuth)
-                        .setPhoneNumber("+91 5555 962 304")       // Phone number to verify
-                        .setTimeout(60L, TimeUnit.SECONDS) // Timeout and unit
-                        .setActivity(this)                 // Activity (for callback binding)
-                        .setCallbacks(mCallbacks)          // OnVerificationStateChangedCallbacks
-                        .build();
-        PhoneAuthProvider.verifyPhoneNumber(options);
-*/
+            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                @Override
+                public boolean onMenuItemClick(MenuItem menuItem) {
+                    switch (menuItem.getItemId()){
+                        case R.id.sign_out:
+                            //signOut
+                            FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(MainActivity.this,LogIn_page.class));
+                            return true;
+                        default:
+                            return false;
+                    }
+                }
+            });
+            popupMenu.show();
+        });
         
     }
 
-    /**
-     * TODO : Edit rules of real Time Firebase
-     */
 
     private void onSignedInIntialize(String displayName) {
         mUserName = displayName;
@@ -364,25 +376,6 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.main_page_menu, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.sign_out:
-                //signOut
-                FirebaseAuth.getInstance().signOut();
-                startActivity(new Intent(MainActivity.this,LogIn_page.class));
-                return true;
-            default:
-                return super.onOptionsItemSelected(item);
-        }
-    }
     @Override
     protected void onPause() {
         super.onPause();

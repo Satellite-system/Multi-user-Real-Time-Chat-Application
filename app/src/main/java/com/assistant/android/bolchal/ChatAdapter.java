@@ -26,8 +26,6 @@ import java.util.Objects;
 
 public class ChatAdapter extends ArrayAdapter<Message> {
 
-
-
     public ChatAdapter(Context context, int resource, List<Message> objects){
         super(context,resource,objects);
     }
@@ -42,6 +40,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         Message message = getItem(position);
 
         String user = Objects.requireNonNull(FirebaseAuth.getInstance().getCurrentUser()).getDisplayName();
+
 
         boolean isPhotoAvailable = message.getPhotoUrl()!=null;
         boolean isTimeAvailable = message.getTime()!=null;
@@ -68,6 +67,7 @@ public class ChatAdapter extends ArrayAdapter<Message> {
                 timeTxtView.setVisibility(View.VISIBLE);
                 timeTxtView.setText(message.getTime());
             } else timeTxtView.setVisibility(View.GONE);
+
 
             AuthorTxtView.setText(message.getName());
 

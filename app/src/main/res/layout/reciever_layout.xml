@@ -1,22 +1,21 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:orientation="vertical"
-    android:layout_marginStart="16dp"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_marginEnd="16dp"
+    android:layout_marginStart="16dp"
     android:padding="2dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"
-        android:background="#d4d1cb"
-        android:padding="6dp">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:background="@color/teal_200"
+        android:padding="15dp">
 
         <TextView
             android:id="@+id/nameTextView"
@@ -24,47 +23,46 @@
             android:layout_height="wrap_content"
             android:layout_weight="0"
             android:textAppearance="?android:attr/textAppearanceSmall"
-            tools:text="Name"
-            android:textColor="@color/teal_700"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="Name" />
 
         <ImageView
             android:id="@+id/photoImageView"
-            android:layout_width="match_parent"
+            android:layout_width="145dp"
             android:layout_height="wrap_content"
+            android:layout_below="@id/nameTextView"
             android:adjustViewBounds="true"
             android:contentDescription="@string/image_sent"
-            android:layout_below="@id/nameTextView"
+            app:layout_constraintBottom_toTopOf="@id/timeTextView"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameTextView"/>
+            app:layout_constraintTop_toBottomOf="@id/nameTextView" />
 
         <TextView
             android:id="@+id/messageTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_below="@id/nameTextView"
             android:layout_weight="0"
             android:textAppearance="?android:attr/textAppearanceLarge"
-            tools:text="Message"
-            android:layout_below="@id/nameTextView"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/nameTextView"/>
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/nameTextView"
+            tools:text="Message" />
 
         <TextView
             android:id="@+id/timeTextView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textAppearance="?android:attr/textAppearanceSmall"
-            tools:text="12:25 AM"
             android:layout_alignParentEnd="true"
             android:layout_alignParentBottom="true"
-            app:layout_constraintEnd_toEndOf="parent"
+            android:textAppearance="?android:attr/textAppearanceSmall"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/messageTextView"/>
-
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/messageTextView"
+            tools:text="12:25 AM" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

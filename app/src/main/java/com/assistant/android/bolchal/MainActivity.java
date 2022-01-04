@@ -2,6 +2,7 @@ package com.assistant.android.bolchal;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.recyclerview.widget.RecyclerView;
@@ -59,7 +60,7 @@ import java.util.Map;
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
-public class MainActivity extends Activity {
+public class MainActivity extends AppCompatActivity {
 
     private ListView mListView;
     private ConstraintLayout sendLayout;
@@ -94,6 +95,12 @@ public class MainActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        getSupportActionBar().setDisplayShowCustomEnabled(true);
+        getSupportActionBar().setCustomView(R.layout.main_action_bar);
+        //getSupportActionBar().setElevation(0);
+        View view = getSupportActionBar().getCustomView();
 
         mUserName = ANONYMOUS;
 
@@ -143,6 +150,7 @@ public class MainActivity extends Activity {
         final List<Message> arrayList = new ArrayList<>();
         mChatAdapter = new ChatAdapter(this,R.layout.chat_layout_page,arrayList);
         mListView.setAdapter(mChatAdapter);
+
 
         /**
          * When Text changes in message Box
@@ -245,25 +253,28 @@ public class MainActivity extends Activity {
         mMessageDatabaseReference.addChildEventListener(mChildEventListener);
 
         //logout when settingIcon is clicked
-        settingImg.setOnClickListener(view -> {
-            PopupMenu popupMenu = new PopupMenu(MainActivity.this,settingImg);
-            MainActivity.this.getMenuInflater().inflate(R.menu.main_page_menu, popupMenu.getMenu());
+        settingImg.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                PopupMenu popupMenu = new PopupMenu(MainActivity.this, settingImg);
+                MainActivity.this.getMenuInflater().inflate(R.menu.main_page_menu, popupMenu.getMenu());
 
-            popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
-                @Override
-                public boolean onMenuItemClick(MenuItem menuItem) {
-                    switch (menuItem.getItemId()){
-                        case R.id.sign_out:
-                            //signOut
-                            FirebaseAuth.getInstance().signOut();
-                            startActivity(new Intent(MainActivity.this,LogIn_page.class));
-                            return true;
-                        default:
-                            return false;
+                popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                    @Override
+                    public boolean onMenuItemClick(MenuItem menuItem) {
+                        switch (menuItem.getItemId()) {
+                            case R.id.sign_out:
+                                //signOut
+                                FirebaseAuth.getInstance().signOut();
+                                startActivity(new Intent(MainActivity.this, LogIn_page.class));
+                                return true;
+                            default:
+                                return false;
+                        }
                     }
-                }
-            });
-            popupMenu.show();
+                });
+                popupMenu.show();
+            }
         });
         
     }

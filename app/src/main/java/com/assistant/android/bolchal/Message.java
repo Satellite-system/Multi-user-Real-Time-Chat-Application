@@ -1,6 +1,9 @@
 package com.assistant.android.bolchal;
 
-public class Message {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class Message implements Parcelable {
 
     private String text;
     private String name;
@@ -23,6 +26,25 @@ public class Message {
         this.photoUrl = photoUrl;
         this.time = time;
     }
+
+    protected Message(Parcel in) {
+        text = in.readString();
+        name = in.readString();
+        photoUrl = in.readString();
+        time = in.readString();
+    }
+
+    public static final Creator<Message> CREATOR = new Creator<Message>() {
+        @Override
+        public Message createFromParcel(Parcel in) {
+            return new Message(in);
+        }
+
+        @Override
+        public Message[] newArray(int size) {
+            return new Message[size];
+        }
+    };
 
     public String getText(){
         return text;
@@ -54,5 +76,18 @@ public class Message {
 
     public void setTime(String time) {
         this.time = time;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+        parcel.writeString(text);
+        parcel.writeString(name);
+        parcel.writeString(photoUrl);
+        parcel.writeString(time);
     }
 }

@@ -1,25 +1,17 @@
 package com.assistant.android.bolchal;
 
-import androidx.annotation.NonNull;
-import androidx.annotation.Nullable;
-import androidx.appcompat.app.ActionBar;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.recyclerview.widget.RecyclerView;
-
-import android.app.Activity;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputFilter;
-import android.text.Spanned;
 import android.text.TextWatcher;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
+import android.view.Gravity;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
@@ -27,38 +19,35 @@ import android.widget.PopupMenu;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.ActionBar;
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
+
 import com.bumptech.glide.Glide;
-import com.firebase.ui.auth.AuthUI;
 import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
-import com.google.firebase.FirebaseException;
 import com.google.firebase.auth.FirebaseAuth;
-import com.google.firebase.auth.FirebaseAuth.AuthStateListener;
 import com.google.firebase.auth.FirebaseUser;
-import com.google.firebase.auth.PhoneAuthCredential;
-import com.google.firebase.auth.PhoneAuthOptions;
-import com.google.firebase.auth.PhoneAuthProvider;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 import com.mikhaellopez.circularimageview.CircularImageView;
 
-import java.net.URI;
-import java.net.URL;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Objects;
-import java.util.concurrent.TimeUnit;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -76,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     private static final String TAG = "MainActivity";
     public static final String ANONYMOUS = "Unknown";
     public static final String FRIENDLY_MSG_LENGTH_KEY = "friendly_msg_length";
+    private static List<Message> arrayList;
 
     private static final int RC_PHOTO_PICKER = 3;
     private static final int DEFAULT_MSG_LENGTH_LIMIT = 80;
@@ -96,7 +86,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        this.getSupportActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
+        Objects.requireNonNull(this.getSupportActionBar()).setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM);
         getSupportActionBar().setDisplayShowCustomEnabled(true);
         getSupportActionBar().setCustomView(R.layout.main_action_bar);
         //getSupportActionBar().setElevation(0);
@@ -147,7 +137,7 @@ public class MainActivity extends AppCompatActivity {
         /**
          * Adapter of List Setup
          */
-        final List<Message> arrayList = new ArrayList<>();
+        arrayList = new ArrayList<>();
         mChatAdapter = new ChatAdapter(this,R.layout.chat_layout_page,arrayList);
         mListView.setAdapter(mChatAdapter);
 
@@ -235,8 +225,8 @@ public class MainActivity extends AppCompatActivity {
 
             @Override
             public void onChildRemoved(@NonNull DataSnapshot snapshot) {
-                Message messageServer = snapshot.getValue(Message.class);
-                mChatAdapter.add(messageServer);
+                Message friendlyMessage = snapshot.getValue(Message.class);
+                mChatAdapter.remove(friendlyMessage);
             }
 
             @Override
@@ -276,9 +266,81 @@ public class MainActivity extends AppCompatActivity {
                 popupMenu.show();
             }
         });
-        
+
+        /**
+         * Long-press List item deletes that message
+         */
+        mListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Message message = (Message) adapterView.getAdapter().getItem(i);
+
+                if(message.getPhotoUrl()==null) {
+//                    Toast.makeText(MainActivity.this, message.getText(), Toast.LENGTH_LONG).show();
+
+                    PopupMenu popupMenu = new PopupMenu(MainActivity.this, mListView, Gravity.AXIS_PULL_AFTER);
+                    MainActivity.this.getMenuInflater().inflate(R.menu.delete_menu, popupMenu.getMenu());
+
+                    popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
+                        @Override
+                        public boolean onMenuItemClick(MenuItem menuItem) {
+                            if (menuItem.getItemId() == R.id.delete) {
+                                deleteMessage(message, i);
+                                return true;
+                            }
+                            return true;
+                        }
+                    });
+                    popupMenu.show();
+                }
+                return false;
+            }
+        });
+
+        /**
+         * opens image when clicked upon it
+         */
+        mListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                Message message = (Message) adapterView.getAdapter().getItem(i);
+
+                boolean hasImg = message.getPhotoUrl()!=null;
+
+                if(hasImg){
+                    Intent intent = new Intent(MainActivity.this,ImageViewer.class);
+                    intent.putExtra("ImageRes",message);
+                    startActivity(intent);
+                }
+
+            }
+        });
+
+
     }
 
+    private void deleteMessage(Message message,int pos){
+
+        String msgTxt = message.getText();
+        DatabaseReference ref = FirebaseDatabase.getInstance().getReference();
+        Query taskQuery = ref.child("messages").orderByChild("text").equalTo(msgTxt);
+
+        taskQuery.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+                    appleSnapshot.getRef().removeValue();
+                }
+                arrayList.remove(pos);
+                mChatAdapter.notifyDataSetChanged();
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+                Log.v(TAG, "onCancelled", databaseError.toException());
+            }
+        });
+    }
 
     private void onSignedInIntialize(String displayName) {
         mUserName = displayName;
@@ -307,7 +369,8 @@ public class MainActivity extends AppCompatActivity {
 
                 @Override
                 public void onChildRemoved(DataSnapshot dataSnapshot) {
-
+                    Message friendlyMessage1 = dataSnapshot.getValue(Message.class);
+                    mChatAdapter.remove(friendlyMessage1);
                 }
 
                 @Override

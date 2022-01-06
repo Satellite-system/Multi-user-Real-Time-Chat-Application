@@ -19,5 +19,12 @@
     </style>
 
     <style name="Alb" parent="Theme.AppCompat.Light"/>
+    <style name="Theme.BolChal.AppBarOverlay">
+
+    </style>
+
+    <style name="Theme.BolChal.PopupOverlay">
+
+    </style>
 
 </resources>

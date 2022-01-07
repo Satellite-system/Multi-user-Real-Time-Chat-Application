@@ -1,22 +1,15 @@
 package com.assistant.android.bolchal;
 
-import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
-import android.view.Gravity;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
-import androidx.recyclerview.widget.RecyclerView;
 
 import com.bumptech.glide.Glide;
 import com.google.firebase.auth.FirebaseAuth;
@@ -46,10 +39,10 @@ public class ChatAdapter extends ArrayAdapter<Message> {
         boolean isTimeAvailable = message.getTime()!=null;
 
 
-            TextView AuthorTxtView = (TextView) convertView.findViewById(R.id.nameTextView);
-            ImageView photoImageView = (ImageView) convertView.findViewById(R.id.photoImageView);
-            TextView messageTxtView = (TextView) convertView.findViewById(R.id.messageTextView);
-            TextView timeTxtView = (TextView) convertView.findViewById(R.id.timeTextView);
+            TextView AuthorTxtView = convertView.findViewById(R.id.nameTextView);
+            ImageView photoImageView = convertView.findViewById(R.id.photoImageView);
+            TextView messageTxtView = convertView.findViewById(R.id.messageTextView);
+            TextView timeTxtView = convertView.findViewById(R.id.timeTextView);
 
             if (isPhotoAvailable) {
                 messageTxtView.setVisibility(View.GONE);

@@ -1,16 +1,14 @@
 package com.assistant.android.bolchal;
 
-import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.CountDownTimer;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 
 import com.assistant.android.bolchal.ui.OptEditText;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -23,14 +21,12 @@ import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.auth.PhoneAuthCredential;
 import com.google.firebase.auth.PhoneAuthOptions;
 import com.google.firebase.auth.PhoneAuthProvider;
-import com.hbb20.CountryCodePicker;
 
 import java.util.Objects;
 import java.util.concurrent.TimeUnit;
 
 public class Otp_verification extends AppCompatActivity {
 
-    private static final String TAG = "LogIn_page";
     private FirebaseAuth mAuth;
     private PhoneAuthProvider.OnVerificationStateChangedCallbacks mCallbacks;
     private String SmsCode;
@@ -174,7 +170,7 @@ public class Otp_verification extends AppCompatActivity {
                             // Sign in failed, display a message and update the UI
                             Toast.makeText(Otp_verification.this, "signInWithCredential:failure" + task.getException(),Toast.LENGTH_LONG).show();
                             if (task.getException() instanceof FirebaseAuthInvalidCredentialsException) {
-                                // The verification code entered was invalid
+                                Toast.makeText(Otp_verification.this,task.getException().toString() +" occured",Toast.LENGTH_SHORT).show();
                             }
                         }
                     }

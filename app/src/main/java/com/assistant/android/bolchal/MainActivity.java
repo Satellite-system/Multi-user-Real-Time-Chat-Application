@@ -3,7 +3,6 @@ package com.assistant.android.bolchal;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.text.Editable;
 import android.text.InputFilter;
 import android.text.TextWatcher;
@@ -97,7 +96,7 @@ public class MainActivity extends AppCompatActivity {
         mListView = findViewById(R.id.recycleView);
         sendLayout = findViewById(R.id.sendContainerView);
         addImage = findViewById(R.id.addImageExtra);
-        msgEditView = (EditText)findViewById(R.id.typingMsgTextView);
+        msgEditView = findViewById(R.id.typingMsgTextView);
         sendImg = findViewById(R.id.sendImageView);
         userNameTxtView = findViewById(R.id.userName);
         userProfilePic = findViewById(R.id.userProfileImg);
@@ -115,7 +114,6 @@ public class MainActivity extends AppCompatActivity {
          * Check Whether user is loggedin Or not
          * if logged then continue otherwise send to login Page
          */
-        //Send To loginPage
         mAuthStateListener = new FirebaseAuth.AuthStateListener() {
             @Override
             public void onAuthStateChanged(@NonNull FirebaseAuth firebaseAuth) {
@@ -252,15 +250,12 @@ public class MainActivity extends AppCompatActivity {
                 popupMenu.setOnMenuItemClickListener(new PopupMenu.OnMenuItemClickListener() {
                     @Override
                     public boolean onMenuItemClick(MenuItem menuItem) {
-                        switch (menuItem.getItemId()) {
-                            case R.id.sign_out:
-                                //signOut
-                                FirebaseAuth.getInstance().signOut();
-                                startActivity(new Intent(MainActivity.this, LogIn_page.class));
-                                return true;
-                            default:
-                                return false;
+                        if (menuItem.getItemId() == R.id.sign_out) {//signOut
+                            FirebaseAuth.getInstance().signOut();
+                            startActivity(new Intent(MainActivity.this, LogIn_page.class));
+                            return true;
                         }
+                        return false;
                     }
                 });
                 popupMenu.show();
@@ -327,8 +322,8 @@ public class MainActivity extends AppCompatActivity {
 
         taskQuery.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot appleSnapshot: dataSnapshot.getChildren()) {
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                for (DataSnapshot appleSnapshot: Objects.requireNonNull(dataSnapshot).getChildren()) {
                     appleSnapshot.getRef().removeValue();
                 }
                 arrayList.remove(pos);
@@ -336,8 +331,8 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
-                Log.v(TAG, "onCancelled", databaseError.toException());
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+                Log.v(TAG, "onCancelled", Objects.requireNonNull(databaseError).toException());
             }
         });
     }
@@ -357,24 +352,24 @@ public class MainActivity extends AppCompatActivity {
         if(mChildEventListener==null) {
             mChildEventListener = new ChildEventListener() {
                 @Override
-                public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-                    Message friendlyMessage1 = dataSnapshot.getValue(Message.class);
+                public void onChildAdded(@NonNull DataSnapshot dataSnapshot, String s) {
+                    Message friendlyMessage1 = Objects.requireNonNull(dataSnapshot).getValue(Message.class);
                     mChatAdapter.add(friendlyMessage1);
                 }
 
                 @Override
-                public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+                public void onChildChanged(@NonNull DataSnapshot dataSnapshot, String s) {
 
                 }
 
                 @Override
-                public void onChildRemoved(DataSnapshot dataSnapshot) {
-                    Message friendlyMessage1 = dataSnapshot.getValue(Message.class);
+                public void onChildRemoved(@NonNull DataSnapshot dataSnapshot) {
+                    Message friendlyMessage1 = Objects.requireNonNull(dataSnapshot).getValue(Message.class);
                     mChatAdapter.remove(friendlyMessage1);
                 }
 
                 @Override
-                public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+                public void onChildMoved(@NonNull DataSnapshot dataSnapshot, String s) {
 
                 }
 
@@ -384,7 +379,7 @@ public class MainActivity extends AppCompatActivity {
                  * @param databaseError
                  */
                 @Override
-                public void onCancelled(DatabaseError databaseError) {
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
                 }
             };

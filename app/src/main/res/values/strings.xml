@@ -15,4 +15,21 @@
     <string name="upload_your_profile_photo">Upload your Profile Photo</string>
     <string name="next"><![CDATA[Next >>>]]></string>
     <string name="this_will_be_visible_to_your_bolchal_groups">This will be visible to your Bolchal Groups.</string>
+    <string name="type_here">Type Here</string>
+    <string name="delete">delete</string>
+    <string name="name">name</string>
+    <string name="_12_11_21_11_45_pm">12/11/21, 11:45 PM</string>
+    <string name="sign_in">Sign In</string>
+    <string name="help">Help</string>
+    <string name="use_the_application_according_to_policy_rules_any">Use the application according to policy rules. Any</string>
+    <string name="phone_number">Phone Number</string>
+    <string name="kinds_of_violation_will_be_subject_to_sanctions">kinds of violation will be subject to sanctions.</string>
+    <string name="by_registering_your_account_you_are_agree">By Registering your account, you are agree</string>
+    <string name="to_all_our_terms_and_conditions">to all our terms and conditions</string>
+    <string name="sign_in_by_google">Sign In by google</string>
+    <string name="or">Or</string>
+    <string name="xxxxxxxxxx">+XXXXXXXXXX</string>
+    <string name="resend_otp_in">Resend Otp in</string>
+    <string name="resend_code">Resend Code</string>
+    <string name="sign_out">Sign Out</string>
 </resources>
